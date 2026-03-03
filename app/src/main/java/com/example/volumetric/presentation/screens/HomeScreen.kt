@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.FloatingActionButton
@@ -21,6 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.volumetric.presentation.composables.home.GreetingSection
+import com.example.volumetric.presentation.composables.home.RecentStatsSection
+import com.example.volumetric.presentation.composables.home.SmartAiInsightCard
+import com.example.volumetric.presentation.composables.home.StartWorkoutButton
+import com.example.volumetric.presentation.composables.home.TopBar
+import com.example.volumetric.presentation.composables.home.WeeklyFocusSection
 import com.example.volumetric.ui.theme.AccentPurple
 import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.GradientEnd
@@ -40,12 +45,12 @@ fun HomeScreen(userName: String = "Ritesh") {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             contentPadding = PaddingValues(top = 16.dp, bottom = 100.dp)
         ) {
-            item { }
-            item { }
-            item { }
-            item { }
-            item { }
-            item { }
+            item { TopBar() }
+            item { GreetingSection("Ritesh") }
+            item { SmartAiInsightCard() }
+            item { StartWorkoutButton() }
+            item { WeeklyFocusSection() }
+            item { RecentStatsSection() }
         }
 
         FloatingActionButton(

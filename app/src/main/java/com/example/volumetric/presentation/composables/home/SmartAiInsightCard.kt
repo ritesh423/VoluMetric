@@ -89,6 +89,8 @@ fun SmartAiInsightCard() {
             )
 
             Spacer(modifier = Modifier.height(12.dp))
+            Divider(color = Color(0xFF2A2845), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(12.dp))
 
             // Muscle pill indicators + description
             Row(verticalAlignment = Alignment.CenterVertically) {
