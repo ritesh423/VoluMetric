@@ -34,7 +34,6 @@ fun TopBar() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Logo + App Name
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
@@ -58,7 +57,6 @@ fun TopBar() {
             )
         }
 
-        //Filter Icon
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.Tune,

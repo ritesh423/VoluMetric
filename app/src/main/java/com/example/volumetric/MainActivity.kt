@@ -4,17 +4,27 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.volumetric.presentation.screens.HomeScreen
-import com.example.volumetric.ui.theme.VoluMetricTheme
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
+import com.example.volumetric.presentation.navigation.VoluMetricApp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            VoluMetricTheme {
-                HomeScreen()
+            val systemUiController = rememberSystemUiController()
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color(0xFF0D0B1E),
+                    darkIcons = false
+                )
             }
+
+            VoluMetricApp()
         }
     }
 }

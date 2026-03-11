@@ -85,7 +85,6 @@ fun CircularProgressItem(muscle: MuscleProgress) {
                 val topLeft = Offset(strokeWidth / 2, strokeWidth / 2)
                 val arcSize = Size(radius * 2, radius * 2)
 
-                // Background track
                 drawArc(
                     color = muscle.trackColor,
                     startAngle = -90f,
@@ -96,7 +95,6 @@ fun CircularProgressItem(muscle: MuscleProgress) {
                     style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
                 )
 
-                // Progress arc
                 drawArc(
                     color = muscle.color,
                     startAngle = -90f,

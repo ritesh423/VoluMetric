@@ -37,7 +37,6 @@ fun RecentStatsSection() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Total Sets - Large card
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
@@ -81,12 +80,10 @@ fun RecentStatsSection() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Two smaller cards
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            // Workouts card
             Card(
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(16.dp),
@@ -113,7 +110,6 @@ fun RecentStatsSection() {
                 }
             }
 
-            // Last Log card
             Card(
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(16.dp),

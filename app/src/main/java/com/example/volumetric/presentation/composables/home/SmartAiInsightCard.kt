@@ -46,7 +46,6 @@ fun SmartAiInsightCard() {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
 
-            // Header row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -92,9 +91,7 @@ fun SmartAiInsightCard() {
             Divider(color = Color(0xFF2A2845), thickness = 1.dp)
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Muscle pill indicators + description
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // Two colored circles (muscle indicators)
                 Box(
                     modifier = Modifier
                         .size(28.dp)
@@ -130,7 +127,6 @@ fun SmartAiInsightCard() {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // View Muscle Analysis
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
