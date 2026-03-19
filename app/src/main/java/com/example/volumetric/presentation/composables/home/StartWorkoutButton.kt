@@ -21,23 +21,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.ui.theme.AccentBlue
-import com.example.volumetric.ui.theme.AccentPurple
+import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.TextPrimary
 
 @Composable
-fun StartWorkoutButton() {
+fun StartWorkoutButton(buttonText : String) {
     Button(
         onClick = { /* Start workout */ },
         modifier = Modifier
             .fillMaxWidth()
-            .height(54.dp),
+            .height(44.dp),
         shape = RoundedCornerShape(28.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
         contentPadding = PaddingValues(0.dp)
@@ -46,9 +44,7 @@ fun StartWorkoutButton() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(AccentBlue, AccentPurple)
-                    ),
+                    Color(0xFF3FE1B0),
                     shape = RoundedCornerShape(28.dp)
                 ),
             contentAlignment = Alignment.Center
@@ -69,8 +65,8 @@ fun StartWorkoutButton() {
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "Start Workout",
-                    color = TextPrimary,
+                    text = buttonText,
+                    color = BackgroundDark,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -82,5 +78,5 @@ fun StartWorkoutButton() {
 @Preview
 @Composable
 fun PreviewWorkoutButton(){
-    StartWorkoutButton()
+    StartWorkoutButton("Log Workout")
 }

@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import com.example.volumetric.presentation.navigation.VoluMetricApp
+import com.example.volumetric.presentation.screens.HomeScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            VoluMetricApp()
+            HomeScreen()
         }
     }
 }

@@ -11,6 +11,8 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 //VoluMetric Colors
+val White = Color(0xF8FFFFFF)
+val Whiteless = Color(0xDFFDF9F9)
 val BackgroundDark   = Color(0xFF0D0B1E)
 val SurfaceDark      = Color(0xFF161430)
 val SurfaceCard      = Color(0xFF1C1A35)

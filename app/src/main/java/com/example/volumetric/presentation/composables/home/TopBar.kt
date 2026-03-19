@@ -37,7 +37,7 @@ fun TopBar() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(32.dp)
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(AccentBlue, AccentPurple)
