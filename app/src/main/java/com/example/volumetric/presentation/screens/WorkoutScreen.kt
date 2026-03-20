@@ -20,6 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessAlarms
 import androidx.compose.material.icons.filled.Accessibility
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.AltRoute
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Cached
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SportsHandball
@@ -41,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.volumetric.domain.models.Muscle
+import com.example.volumetric.presentation.composables.home.StartWorkoutButton
 import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.White
 
@@ -128,7 +131,7 @@ fun WorkoutScreen() {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Default.TrackChanges, contentDescription = "Icon")
+                        Icon(Icons.Default.AltRoute, contentDescription = "Icon")
                         Spacer(modifier = Modifier.width(5.dp))
                         Text("Exercise Name", fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = White)
                     }
@@ -147,7 +150,43 @@ fun WorkoutScreen() {
                         placeholder = { Text("eg.. Romanian Deadlift", color = White) },
 
                     )
-                    Spacer(modifier = Modifier.height(40.dp))
+                }
+
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Spacer(modifier = Modifier.height(14.dp))
+                }
+
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Default.AutoAwesome, contentDescription = "Icon")
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text("Total Sets", fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = White)
+                    }
+
+                }
+
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth()
+                            .clip(shape = RoundedCornerShape(10.dp)),
+                        state = exerciseName,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = Color(0xDA2C2A2A),
+                            focusedContainerColor = Color(0xDA2C2A2A)
+                        ),
+                        placeholder = { Text("No of Sets eg.. 3", color = White) },
+                        )
+                }
+
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Spacer(modifier = Modifier.height(14.dp))
+                }
+
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    StartWorkoutButton("Save Workout")
                 }
 
             }
