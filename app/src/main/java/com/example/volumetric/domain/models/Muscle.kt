@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class Muscle(
     val name : String,
-    val completed : Int,
-    val target : Int,
+    val completed : Int = 0,
+    val target : Int = 0,
     val icon : ImageVector
 )
