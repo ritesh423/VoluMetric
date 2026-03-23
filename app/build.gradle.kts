@@ -88,4 +88,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation("androidx.activity:activity-ktx:1.7.2")
+
+    //Animated Bottombar
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
 }

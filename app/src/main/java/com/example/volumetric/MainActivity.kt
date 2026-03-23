@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import com.example.volumetric.presentation.screens.WorkoutScreen
+import com.example.volumetric.presentation.navigation.BottomNavigation
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            WorkoutScreen()
+            BottomNavigation()
         }
     }
 }
