@@ -30,9 +30,12 @@ import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.TextPrimary
 
 @Composable
-fun StartWorkoutButton(buttonText : String) {
+fun StartWorkoutButton(
+    buttonText: String,
+    onClick: () -> Unit = {}
+) {
     Button(
-        onClick = { /* Start workout */ },
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(44.dp),
@@ -77,6 +80,6 @@ fun StartWorkoutButton(buttonText : String) {
 
 @Preview
 @Composable
-fun PreviewWorkoutButton(){
-    StartWorkoutButton("Log Workout")
+fun PreviewWorkoutButton() {
+    StartWorkoutButton(buttonText = "Log Workout", onClick = {})
 }

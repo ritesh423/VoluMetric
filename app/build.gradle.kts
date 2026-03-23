@@ -86,4 +86,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
+
+    implementation("androidx.activity:activity-ktx:1.7.2")
 }
