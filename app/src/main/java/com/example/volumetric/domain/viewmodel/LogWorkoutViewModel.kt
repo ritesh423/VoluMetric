@@ -1,5 +1,7 @@
 package com.example.volumetric.domain.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.volumetric.data.WorkoutDetailDao
@@ -10,6 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +34,7 @@ class LogWorkoutViewModel @Inject constructor(
     // Jobs to handle debouncing - cancels previous job when new input comes
     private var exerciseNameJob: Job? = null
     private var totalSetsJob: Job? = null
+
 
     companion object {
         private const val DEBOUNCE_DELAY_MS = 500L
@@ -60,8 +64,12 @@ class LogWorkoutViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun logWorkoutToDB() {
         viewModelScope.launch {
+            val currentDate = LocalDate.now()
+            val currentWeekOfYear = currentDate.get(java.time.temporal.WeekFields.ISO.weekOfYear())
+            val currentYear = currentDate.year
             // Validate all required fields are filled
             if (_selectedMuscleGroup.value == null || 
                 _selectedExerciseName.value.isBlank() || 
@@ -82,7 +90,9 @@ class LogWorkoutViewModel @Inject constructor(
                     muscleGroup = _selectedMuscleGroup.value!!,
                     exerciseName = _selectedExerciseName.value,
                     totalSets = setsCount,
-                    createdAt = System.currentTimeMillis()
+                    createdAt = System.currentTimeMillis(),
+                    weekOfYear = currentWeekOfYear,
+                    year = currentYear
                 )
             )
 

@@ -3,6 +3,7 @@ package com.example.volumetric.presentation.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,7 +41,9 @@ import com.example.volumetric.ui.theme.GradientEnd
 import com.example.volumetric.ui.theme.TextPrimary
 
 @Composable
+
 fun HomeScreen(userName: String = "Ritesh") {
+
     val muscleGroups = listOf(
         Muscle("Chest", 12, 20, Icons.Default.Cached),
         Muscle("Back", 8, 18, Icons.Default.Share),
@@ -81,39 +84,47 @@ fun HomeScreen(userName: String = "Ritesh") {
             items(muscleGroups) { muscle ->
                 MuscleGroupCard(muscle)
             }
-        }
-
-        FloatingActionButton(
-            onClick = {},
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 20.dp, bottom = 32.dp)
-                .size(56.dp),
-            shape = CircleShape,
-            containerColor = Color.Transparent,
-            elevation = FloatingActionButtonDefaults.elevation(0.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(AccentPurple, GradientEnd)
-                        ),
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "Stats",
-                    tint = TextPrimary,
-                    modifier = Modifier.size(24.dp)
-                )
+            item(span = { GridItemSpan(maxLineSpan) }){
+                FloatingActionButton()
             }
         }
+
+
     }
 
+}
+
+@Composable
+fun BoxScope.FloatingActionButton() {
+    FloatingActionButton(
+        onClick = {},
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(end = 20.dp, bottom = 32.dp)
+            .size(56.dp),
+        shape = CircleShape,
+        containerColor = Color.Transparent,
+        elevation = FloatingActionButtonDefaults.elevation(0.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(AccentPurple, GradientEnd)
+                    ),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Share,
+                contentDescription = "Stats",
+                tint = TextPrimary,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
 }
 
 @Preview

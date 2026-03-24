@@ -25,6 +25,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.example.volumetric.presentation.screens.HomeScreen
+import com.example.volumetric.presentation.screens.ThirdScreen
 import com.example.volumetric.presentation.screens.WorkoutScreen
 import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.PurpleGrey40
@@ -79,7 +80,7 @@ fun BottomNavigation() {
                     }
                 }
             }
-        }
+        },
     ) { innerPadding ->
         ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
     }
@@ -87,12 +88,13 @@ fun BottomNavigation() {
 
 }
 
+@androidx.annotation.RequiresApi(android.os.Build.VERSION_CODES.O)
 @Composable
 fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
     when (selectedIndex) {
         0 -> HomeScreen()
         1 -> WorkoutScreen()
-        2 -> HomeScreen()
+        2 -> ThirdScreen()
     }
 
 }
