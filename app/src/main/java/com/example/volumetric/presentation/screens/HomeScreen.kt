@@ -1,5 +1,7 @@
 package com.example.volumetric.presentation.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,13 +26,18 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.volumetric.data.mappers.toMuscle
 import com.example.volumetric.domain.models.Muscle
+import com.example.volumetric.domain.viewmodel.MuscleStatsViewModel
 import com.example.volumetric.presentation.composables.home.GreetingSection
 import com.example.volumetric.presentation.composables.home.MuscleGroupCard
 import com.example.volumetric.presentation.composables.home.TopBar
@@ -40,9 +47,15 @@ import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.GradientEnd
 import com.example.volumetric.ui.theme.TextPrimary
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 
-fun HomeScreen(userName: String = "Ritesh") {
+fun HomeScreen(
+    userName: String = "Ritesh",
+    viewModel: MuscleStatsViewModel = hiltViewModel()
+) {
+    val weeklyStats by viewModel.weeklyStats.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     val muscleGroups = listOf(
         Muscle("Chest", 12, 20, Icons.Default.Cached),
@@ -52,6 +65,7 @@ fun HomeScreen(userName: String = "Ritesh") {
         Muscle("Arms", 18, 15, Icons.Default.SportsHandball),
         Muscle("Core", 4, 10, Icons.Default.AccountCircle)
     )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -81,10 +95,10 @@ fun HomeScreen(userName: String = "Ritesh") {
             }
 
             // Grid items
-            items(muscleGroups) { muscle ->
-                MuscleGroupCard(muscle)
+            items(weeklyStats) { stat ->
+                MuscleGroupCard(stat.toMuscle())
             }
-            item(span = { GridItemSpan(maxLineSpan) }){
+            item(span = { GridItemSpan(maxLineSpan) }) {
                 FloatingActionButton()
             }
         }
@@ -127,8 +141,9 @@ fun BoxScope.FloatingActionButton() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun PreviewHomeScreen(){
+fun PreviewHomeScreen() {
     HomeScreen()
 }

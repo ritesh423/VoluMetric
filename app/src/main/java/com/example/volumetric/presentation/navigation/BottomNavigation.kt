@@ -1,5 +1,7 @@
 package com.example.volumetric.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -27,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import com.example.volumetric.presentation.screens.HomeScreen
 import com.example.volumetric.presentation.screens.ThirdScreen
 import com.example.volumetric.presentation.screens.WorkoutScreen
-import com.example.volumetric.ui.theme.BackgroundDark
 import com.example.volumetric.ui.theme.PurpleGrey40
+import com.example.volumetric.ui.theme.SurfaceDark
 import com.example.volumetric.ui.theme.White
 import com.exyte.animatednavbar.AnimatedNavigationBar
 import com.exyte.animatednavbar.animation.balltrajectory.Straight
@@ -36,6 +38,7 @@ import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BottomNavigation() {
     val navItemList = listOf(
@@ -57,7 +60,7 @@ fun BottomNavigation() {
                 cornerRadius = shapeCornerRadius(cornerRadius = 34.dp),
                 ballAnimation = Straight(tween(300)),
                 indentAnimation = Height(tween(300)),
-                barColor = BackgroundDark,
+                barColor = SurfaceDark,
                 ballColor = PurpleGrey40,
             ) {
                 navItemList.forEachIndexed { index, item ->

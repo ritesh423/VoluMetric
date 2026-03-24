@@ -36,6 +36,7 @@ class LogWorkoutViewModel @Inject constructor(
     private var totalSetsJob: Job? = null
 
 
+
     companion object {
         private const val DEBOUNCE_DELAY_MS = 500L
     }
