@@ -1,8 +1,10 @@
 package com.example.volumetric.presentation.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,12 +25,12 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AltRoute
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Cached
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SportsHandball
 import androidx.compose.material.icons.filled.TrackChanges
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Snackbar
@@ -47,9 +49,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +62,12 @@ import com.example.volumetric.domain.models.Muscle
 import com.example.volumetric.domain.viewmodel.LogWorkoutViewModel
 import com.example.volumetric.presentation.composables.home.StartWorkoutButton
 import com.example.volumetric.presentation.composables.workout.MuscleSelectionCard
+import com.example.volumetric.ui.theme.AccentBlue
+import com.example.volumetric.ui.theme.AccentPurple
 import com.example.volumetric.ui.theme.BackgroundDark
+import com.example.volumetric.ui.theme.SurfaceCard
+import com.example.volumetric.ui.theme.TextMuted
+import com.example.volumetric.ui.theme.TextSecondary
 import com.example.volumetric.ui.theme.White
 
 @Composable
@@ -111,11 +120,11 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
         Muscle("Core", icon = Icons.Default.AccountCircle)
     )
 
-    val gradient = Brush.linearGradient(
+    val cardGradient = Brush.linearGradient(
         colors = listOf(
-            Color(0xFF1F2A37),
-            Color(0xFF1B3145),
-            Color(0xFF2A1E3F)
+            Color(0xFF161430),
+            Color(0xFF1A1535),
+            Color(0xFF1C1240)
         )
     )
 
@@ -123,18 +132,18 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundDark)
-            .padding(20.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Box(
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(20.dp))
-                .background(gradient)
+                .clip(shape = RoundedCornerShape(24.dp))
+                .background(cardGradient)
         ) {
             LazyVerticalGrid(
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier.padding(horizontal = 18.dp, vertical = 20.dp),
                 columns = GridCells.Fixed(3),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 // Header
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -142,21 +151,40 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("New Entry", fontSize = 25.sp, fontWeight = FontWeight.Medium, color = White)
+                        Text(
+                            "New Entry",
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = White
+                        )
                         Spacer(modifier = Modifier.width(10.dp))
-                        OutlinedButton(
-                            onClick = {},
-                            colors = ButtonDefaults.buttonColors(contentColor = Color(0xFF2196F3))
+                        Box(
+                            modifier = Modifier
+                                .border(
+                                    width = 1.dp,
+                                    brush = Brush.linearGradient(listOf(AccentBlue, AccentPurple)),
+                                    shape = RoundedCornerShape(50)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
-                            Text("Active Session")
+                            Text(
+                                "Active Session",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = AccentBlue
+                            )
                         }
                     }
                 }
 
                 // Subtitle
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text("Log your sets to track weekly volume.", fontSize = 14.sp, color = White)
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Text(
+                        "Log your sets to track weekly volume.",
+                        fontSize = 13.sp,
+                        color = TextSecondary
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 // Target Muscle Section Header
@@ -165,11 +193,22 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Default.TrackChanges, contentDescription = "Target Muscle Icon")
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text("Target Muscle", fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = White)
+                        Icon(
+                            Icons.Default.TrackChanges,
+                            contentDescription = "Target Muscle Icon",
+                            tint = AccentBlue,
+                            modifier = Modifier.height(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            "TARGET MUSCLE",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = TextSecondary,
+                            letterSpacing = 1.2.sp
+                        )
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
 
                 // Muscle Selection Cards
@@ -182,7 +221,7 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                 }
 
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
                 // Exercise Name Section Header
@@ -191,33 +230,53 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Default.AltRoute, contentDescription = "Exercise Name Icon")
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text("Exercise Name", fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = White)
+                        Icon(
+                            Icons.Default.AltRoute,
+                            contentDescription = "Exercise Name Icon",
+                            tint = AccentBlue,
+                            modifier = Modifier.height(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            "EXERCISE NAME",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = TextSecondary,
+                            letterSpacing = 1.2.sp
+                        )
                     }
                 }
 
-                // Exercise Name TextField with debouncing
+                // Exercise Name TextField
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(shape = RoundedCornerShape(10.dp)),
+                            .clip(shape = RoundedCornerShape(12.dp)),
                         value = exerciseNameText,
                         onValueChange = { exerciseNameText = it },
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                         colors = OutlinedTextFieldDefaults.colors(
-                            unfocusedContainerColor = Color(0xDA2C2A2A),
-                            focusedContainerColor = Color(0xDA2C2A2A),
+                            unfocusedContainerColor = SurfaceCard,
+                            focusedContainerColor = SurfaceCard,
                             unfocusedTextColor = White,
-                            focusedTextColor = White
+                            focusedTextColor = White,
+                            unfocusedBorderColor = Color(0xFF2A2850),
+                            focusedBorderColor = AccentBlue
                         ),
-                        placeholder = { Text("eg.. Romanian Deadlift", color = White.copy(alpha = 0.6f)) }
+                        placeholder = {
+                            Text(
+                                "e.g. Bench Press",
+                                color = TextMuted,
+                                fontSize = 14.sp
+                            )
+                        },
+                        singleLine = true
                     )
                 }
 
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
                 // Total Sets Section Header
@@ -226,48 +285,114 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Default.AutoAwesome, contentDescription = "Total Sets Icon")
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text("Total Sets", fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = White)
+                        Icon(
+                            Icons.Default.AutoAwesome,
+                            contentDescription = "Total Sets Icon",
+                            tint = AccentBlue,
+                            modifier = Modifier.height(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            "TOTAL SETS",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = TextSecondary,
+                            letterSpacing = 1.2.sp
+                        )
                     }
                 }
 
-                // Total Sets TextField with debouncing
+                // Total Sets Row
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(shape = RoundedCornerShape(10.dp)),
-                        value = totalSetsText,
-                        onValueChange = { newValue ->
-                            // Only allow numeric input
-                            if (newValue.isEmpty() || newValue.all { it.isDigit() }) {
-                                totalSetsText = newValue
-                            }
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done,
-                            keyboardType = KeyboardType.Number
-                        ),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            unfocusedContainerColor = Color(0xDA2C2A2A),
-                            focusedContainerColor = Color(0xDA2C2A2A),
-                            unfocusedTextColor = White,
-                            focusedTextColor = White
-                        ),
-                        placeholder = { Text("No of Sets eg.. 3", color = White.copy(alpha = 0.6f)) }
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .width(80.dp)
+                                .clip(shape = RoundedCornerShape(12.dp)),
+                            value = totalSetsText,
+                            onValueChange = { newValue ->
+                                // Only allow numeric input
+                                if (newValue.isEmpty() || newValue.all { it.isDigit() }) {
+                                    totalSetsText = newValue
+                                }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = ImeAction.Done,
+                                keyboardType = KeyboardType.Number
+                            ),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedContainerColor = SurfaceCard,
+                                focusedContainerColor = SurfaceCard,
+                                unfocusedTextColor = White,
+                                focusedTextColor = White,
+                                unfocusedBorderColor = Color(0xFF2A2850),
+                                focusedBorderColor = AccentBlue
+                            ),
+                            placeholder = {
+                                Text(
+                                    "0",
+                                    color = TextMuted,
+                                    fontSize = 22.sp,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center
+                                )
+                            },
+                            textStyle = TextStyle(
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                color = White
+                            ),
+                            singleLine = true
+                        )
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(SurfaceCard)
+                                .padding(horizontal = 14.dp, vertical = 12.dp)
+                        ) {
+                            Text(
+                                "Weekly Target: 20",
+                                color = White,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            LinearProgressIndicator(
+                                progress = { 0.6f },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(4.dp)
+                                    .clip(RoundedCornerShape(50)),
+                                color = AccentPurple,
+                                trackColor = Color(0xFF2A2850)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                "12 of 20 sets completed",
+                                color = TextMuted,
+                                fontSize = 11.sp
+                            )
+                        }
+                    }
                 }
 
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 // Save Button
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     StartWorkoutButton(
                         buttonText = "Save Workout",
-                        onClick = { viewModel.logWorkoutToDB() }
+                        onClick = { viewModel.logWorkoutToDB() },
+                        icon = Icons.Default.CheckCircle,
+                        useGradient = true
                     )
                 }
             }
