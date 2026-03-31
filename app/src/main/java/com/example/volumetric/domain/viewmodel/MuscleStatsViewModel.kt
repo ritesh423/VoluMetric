@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.volumetric.data.MuscleGroupWeeklyStats
 import com.example.volumetric.data.WorkoutDetailDao
+import com.example.volumetric.data.WorkoutDetailEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +26,10 @@ class MuscleStatsViewModel @Inject constructor(
     private val _weeklyStats = MutableStateFlow<List<MuscleGroupWeeklyStats>>(emptyList())
     val weeklyStats = _weeklyStats.asStateFlow()
 
+    private val _allStats = MutableStateFlow<List<WorkoutDetailEntity>>(emptyList())
+    val allStats = _allStats.asStateFlow()
+
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
@@ -42,12 +47,26 @@ class MuscleStatsViewModel @Inject constructor(
             val weekEnd = weekStart.plusDays(7)
 
             // Convert to milliseconds for the database query
-            val weekStartMillis = weekStart.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-            val weekEndMillis = weekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            val weekStartMillis =
+                weekStart.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            val weekEndMillis =
+                weekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-            // Get stats from database
-            val stats = workoutDetailDao.getWeeklySetsPerMuscleGroup(weekStartMillis, weekEndMillis)
-            _weeklyStats.value = stats
+            // Collect weekly stats Flow
+            viewModelScope.launch {
+                workoutDetailDao.getWeeklySetsPerMuscleGroup(weekStartMillis, weekEndMillis)
+                    .collect { stats ->
+                        _weeklyStats.value = stats
+                    }
+            }
+
+            // Collect all workouts Flow
+            viewModelScope.launch {
+                workoutDetailDao.getAllWorkouts()
+                    .collect { allWorkouts ->
+                        _allStats.value = allWorkouts
+                    }
+            }
 
             _isLoading.value = false
         }
