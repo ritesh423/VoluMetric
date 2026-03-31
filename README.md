@@ -7,7 +7,7 @@ A modern Android workout tracker built with Jetpack Compose that helps you log e
 <p align="center">
   <img src="app/src/main/res/drawable/Volumetricscreenshots/HomeScreen.png" width="280" alt="Home Screen"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="app/src/main/res/drawable/Volumetricscreenshots/WorkoutLogScreen (2).png" width="280" alt="Workout Log Screen"/>
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/WorkoutLogScreen.png" width="280" alt="Workout Log Screen"/>
 </p>
 
 ## Features
