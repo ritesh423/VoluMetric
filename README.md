@@ -34,7 +34,7 @@ A modern Android workout tracker built with Jetpack Compose that helps you log e
 com.example.volumetric
 ├── data/
 │   ├── database/         # Room database, DAO, entities
-│   └── di/               # Hilt modules
+│   └── di/               # Hilt modules 
 ├── domain/
 │   ├── models/           # Domain models (Muscle)
 │   └── viewmodel/        # ViewModels (LogWorkout, MuscleStats)

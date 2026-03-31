@@ -52,6 +52,8 @@ class MuscleStatsViewModel @Inject constructor(
             val weekEndMillis =
                 weekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
+
+
             // Collect weekly stats Flow
             viewModelScope.launch {
                 workoutDetailDao.getWeeklySetsPerMuscleGroup(weekStartMillis, weekEndMillis)
