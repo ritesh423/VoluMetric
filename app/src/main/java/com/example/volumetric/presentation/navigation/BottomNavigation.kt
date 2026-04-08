@@ -35,8 +35,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.volumetric.presentation.screens.HistoryScreen
 import com.example.volumetric.presentation.screens.HomeScreen
-import com.example.volumetric.presentation.screens.ThirdScreen
 import com.example.volumetric.presentation.screens.WorkoutScreen
 import com.example.volumetric.ui.theme.AccentBlue
 import com.example.volumetric.ui.theme.AccentPurple
@@ -140,7 +140,7 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
     when (selectedIndex) {
         0 -> HomeScreen()
         1 -> WorkoutScreen()
-        2 -> ThirdScreen()
+        2 -> HistoryScreen()
     }
 }
 

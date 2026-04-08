@@ -65,7 +65,7 @@ fun AllWorkoutCard(stat: WorkoutDetail) {
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = stat.createdAt,
+                        text = "⏲ ${stat.createdAt}",
                         fontSize = 14.sp,
                         color = White.copy(alpha = 0.7f)
                     )
