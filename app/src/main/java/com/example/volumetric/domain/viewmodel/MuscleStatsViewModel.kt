@@ -9,12 +9,17 @@ import com.example.volumetric.data.WorkoutDetailDao
 import com.example.volumetric.data.WorkoutDetailEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.TemporalAdjusters
+import java.time.temporal.WeekFields
+import java.util.Locale
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,6 +37,31 @@ class MuscleStatsViewModel @Inject constructor(
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
+
+
+    val totalWorkouts = _allStats
+        .map { it.size }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+
+    val thisWeekCount = _allStats
+        .map { workouts ->
+            val today = LocalDate.now()
+            val currentWeek = today.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())
+            val currentYear = today.year
+            workouts.count { it.weekOfYear == currentWeek && it.year == currentYear }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+
+    val mostTrainedMuscle = _allStats
+        .map { workouts ->
+            workouts
+                .groupBy { it.muscleGroup }
+                .mapValues { entry -> entry.value.sumOf { it.totalSets } }
+                .maxByOrNull { it.value }
+                ?.key
+                ?: "—"
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), "—")
 
     init {
         loadWeeklyStats()
