@@ -130,15 +130,23 @@ fun BottomNavigation() {
             }
         },
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
+        ContentScreen(
+            modifier = Modifier.padding(innerPadding),
+            selectedIndex = selectedIndex,
+            onSelectTab = { selectedIndex = it }
+        )
     }
 }
 
 @androidx.annotation.RequiresApi(android.os.Build.VERSION_CODES.O)
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
+fun ContentScreen(
+    modifier: Modifier = Modifier,
+    selectedIndex: Int,
+    onSelectTab: (Int) -> Unit
+) {
     when (selectedIndex) {
-        0 -> HomeScreen()
+        0 -> HomeScreen(onNavigateToLog = { onSelectTab(1) })
         1 -> WorkoutScreen()
         2 -> HistoryScreen()
     }
