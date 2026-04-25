@@ -56,13 +56,11 @@ class MuscleStatsViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
-    // ---- Weekly metrics for the Home screen ----
-
     val weeklySetsCompleted = _weeklyStats
         .map { stats -> stats.sumOf { it.totalSets } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
-    val weeklySetsTarget = muscleVolumeTarget.values.sum() // constant total across all muscles
+    val weeklySetsTarget = muscleVolumeTarget.values.sum()
 
     val avgIntensity = _weeklyStats
         .map { stats ->
@@ -85,8 +83,6 @@ class MuscleStatsViewModel @Inject constructor(
                 ?: "—"
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), "—")
-
-    // ---- History screen filter state ----
 
     private val _selectedFilter = MutableStateFlow(HistoryFilter.ALL)
     val selectedFilter = _selectedFilter.asStateFlow()
@@ -113,11 +109,6 @@ class MuscleStatsViewModel @Inject constructor(
         _selectedFilter.value = filter
     }
 
-    /**
-     * Filtered workouts grouped by date bucket (Today / Yesterday / Earlier).
-     * Insertion order is preserved, so newest dates appear first because
-     * `getAllWorkouts()` returns rows ordered by createdAt DESC.
-     */
     val groupedWorkouts = filteredWorkouts
         .map { workouts ->
             workouts.groupBy { DateBucket.fromEpochMillis(it.createdAt) }
@@ -132,20 +123,15 @@ class MuscleStatsViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
 
-            // Calculate current week's start (Monday) and end (Sunday)
             val today = LocalDate.now()
             val weekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
             val weekEnd = weekStart.plusDays(7)
 
-            // Convert to milliseconds for the database query
             val weekStartMillis =
                 weekStart.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
             val weekEndMillis =
                 weekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-
-
-            // Collect weekly stats Flow
             viewModelScope.launch {
                 workoutDetailDao.getWeeklySetsPerMuscleGroup(weekStartMillis, weekEndMillis)
                     .collect { stats ->
@@ -153,7 +139,6 @@ class MuscleStatsViewModel @Inject constructor(
                     }
             }
 
-            // Collect all workouts Flow
             viewModelScope.launch {
                 workoutDetailDao.getAllWorkouts()
                     .collect { allWorkouts ->

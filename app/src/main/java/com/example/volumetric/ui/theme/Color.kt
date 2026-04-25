@@ -10,7 +10,6 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-//VoluMetric Colors
 val White = Color(0xF8FFFFFF)
 val Whiteless = Color(0xDFFDF9F9)
 val BackgroundDark   = Color(0xFF0D0B1E)

@@ -44,7 +44,6 @@ fun AllWorkoutCard(stat: WorkoutDetail) {
             .padding(PaddingValues(horizontal = 14.dp, vertical = 12.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Left: round icon badge
         Box(
             modifier = Modifier
                 .size(40.dp)
@@ -64,7 +63,6 @@ fun AllWorkoutCard(stat: WorkoutDetail) {
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        // Middle: exercise name + muscle group
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -85,7 +83,6 @@ fun AllWorkoutCard(stat: WorkoutDetail) {
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        // Right: sets + time stacked
         Column(
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(4.dp)

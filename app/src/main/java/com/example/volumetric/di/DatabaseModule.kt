@@ -31,12 +31,10 @@ object DataBaseModule {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    // Seed week 13 (March 23-29, 2026) test data
-                    // Timestamps: March 24 (Tue), March 25 (Wed), March 27 (Fri) at noon UTC
                     val week13Timestamps = listOf(
-                        1774267200000L, // March 23, 2026 12:00 PM UTC (Monday)
-                        1774353600000L, // March 24, 2026 12:00 PM UTC (Tuesday)
-                        1774526400000L  // March 26, 2026 12:00 PM UTC (Thursday)
+                        1774267200000L,
+                        1774353600000L,
+                        1774526400000L
                     )
                     val seedData = listOf(
                         Triple("Chest", "Bench Press", 3),

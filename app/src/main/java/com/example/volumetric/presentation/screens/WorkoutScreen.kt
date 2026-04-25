@@ -72,33 +72,26 @@ import com.example.volumetric.ui.theme.White
 
 @Composable
 fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
-    // Collect states from ViewModel
     val selectedMuscleGroup by viewModel.selectedMuscleGroup.collectAsState()
     val saveStatus by viewModel.saveStatus.collectAsState()
 
-    // Local state for text fields (we'll debounce these)
     var exerciseNameText by remember { mutableStateOf("") }
     var totalSetsText by remember { mutableStateOf("") }
 
-    // Snackbar state for showing feedback
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // Debounce effect for exercise name
     LaunchedEffect(exerciseNameText) {
         viewModel.onExerciseNameChanged(exerciseNameText)
     }
 
-    // Debounce effect for total sets
     LaunchedEffect(totalSetsText) {
         viewModel.onTotalSetsChanged(totalSetsText)
     }
 
-    // Handle save status changes (show snackbar and reset form)
     LaunchedEffect(saveStatus) {
         when (saveStatus) {
             true -> {
                 snackbarHostState.showSnackbar("Workout saved successfully!")
-                // Reset form fields
                 exerciseNameText = ""
                 totalSetsText = ""
                 viewModel.resetForm()
@@ -107,7 +100,7 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                 snackbarHostState.showSnackbar("Please fill all fields correctly")
                 viewModel.clearSaveStatus()
             }
-            null -> { /* Do nothing */ }
+            null -> {}
         }
     }
 
@@ -145,7 +138,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                // Header
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -177,7 +169,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     }
                 }
 
-                // Subtitle
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
                         "Log your sets to track weekly volume.",
@@ -187,7 +178,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Target Muscle Section Header
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -211,7 +201,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                // Muscle Selection Cards
                 items(muscleGroups) { muscle ->
                     MuscleSelectionCard(
                         muscle = muscle,
@@ -224,7 +213,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                // Exercise Name Section Header
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -247,7 +235,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     }
                 }
 
-                // Exercise Name TextField
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     OutlinedTextField(
                         modifier = Modifier
@@ -279,7 +266,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                // Total Sets Section Header
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -302,7 +288,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     }
                 }
 
-                // Total Sets Row
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -315,7 +300,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                                 .clip(shape = RoundedCornerShape(12.dp)),
                             value = totalSetsText,
                             onValueChange = { newValue ->
-                                // Only allow numeric input
                                 if (newValue.isEmpty() || newValue.all { it.isDigit() }) {
                                     totalSetsText = newValue
                                 }
@@ -386,7 +370,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Save Button
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     StartWorkoutButton(
                         buttonText = "Save Workout",
@@ -398,7 +381,6 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
             }
         }
 
-        // Snackbar for feedback
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)

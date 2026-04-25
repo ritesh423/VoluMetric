@@ -18,14 +18,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-//            val systemUiController = rememberSystemUiController()
-//            SideEffect {
-//                systemUiController.setSystemBarsColor(
-//                    color = Color(0xFF0D0B1E),
-//                    darkIcons = false
-//                )
-//            }
-
             BottomNavigation()
         }
     }

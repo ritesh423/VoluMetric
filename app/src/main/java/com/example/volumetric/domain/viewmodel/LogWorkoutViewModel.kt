@@ -31,7 +31,6 @@ class LogWorkoutViewModel @Inject constructor(
     private val _saveStatus = MutableStateFlow<Boolean?>(null)
     val saveStatus = _saveStatus.asStateFlow()
 
-    // Jobs to handle debouncing - cancels previous job when new input comes
     private var exerciseNameJob: Job? = null
     private var totalSetsJob: Job? = null
 
@@ -46,9 +45,7 @@ class LogWorkoutViewModel @Inject constructor(
     }
 
     fun onExerciseNameChanged(exerciseName: String) {
-        // Cancel any previous pending update
         exerciseNameJob?.cancel()
-        // Launch new coroutine that waits before updating
         exerciseNameJob = viewModelScope.launch {
             delay(DEBOUNCE_DELAY_MS)
             _selectedExerciseName.value = exerciseName
@@ -56,9 +53,7 @@ class LogWorkoutViewModel @Inject constructor(
     }
 
     fun onTotalSetsChanged(totalSets: String) {
-        // Cancel any previous pending update
         totalSetsJob?.cancel()
-        // Launch new coroutine that waits before updating
         totalSetsJob = viewModelScope.launch {
             delay(DEBOUNCE_DELAY_MS)
             _totalSets.value = totalSets
@@ -71,15 +66,13 @@ class LogWorkoutViewModel @Inject constructor(
             val currentDate = LocalDate.now()
             val currentWeekOfYear = currentDate.get(java.time.temporal.WeekFields.ISO.weekOfYear())
             val currentYear = currentDate.year
-            // Validate all required fields are filled
-            if (_selectedMuscleGroup.value == null || 
-                _selectedExerciseName.value.isBlank() || 
+            if (_selectedMuscleGroup.value == null ||
+                _selectedExerciseName.value.isBlank() ||
                 _totalSets.value.isBlank()) {
                 _saveStatus.value = false
                 return@launch
             }
 
-            // Try to parse totalSets as Int, fail if invalid
             val setsCount = _totalSets.value.toIntOrNull()
             if (setsCount == null || setsCount <= 0) {
                 _saveStatus.value = false
@@ -101,7 +94,6 @@ class LogWorkoutViewModel @Inject constructor(
         }
     }
 
-    // Reset form after successful save
     fun resetForm() {
         _selectedMuscleGroup.value = null
         _selectedExerciseName.value = ""
@@ -109,7 +101,6 @@ class LogWorkoutViewModel @Inject constructor(
         _saveStatus.value = null
     }
 
-    // Clear save status (used to dismiss snackbar)
     fun clearSaveStatus() {
         _saveStatus.value = null
     }

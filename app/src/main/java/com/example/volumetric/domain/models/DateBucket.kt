@@ -8,10 +8,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-/**
- * A logical "section" in the workout history list.
- * Today / Yesterday get friendly labels; everything else is bucketed by the actual date.
- */
 sealed class DateBucket(val label: String) {
     object Today : DateBucket("TODAY")
     object Yesterday : DateBucket("YESTERDAY")

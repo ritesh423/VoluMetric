@@ -51,8 +51,8 @@ fun HistoryScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         HistoryTopBar(
-            onBackClick = { /* hook up later */ },
-            onFilterClick = { /* hook up later */ }
+            onBackClick = {},
+            onFilterClick = {}
         )
 
         StatCardRow(
