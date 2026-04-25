@@ -2,20 +2,27 @@
 
 A modern Android workout tracker built with Jetpack Compose that helps you log exercises and monitor weekly training volume by muscle group.
 
+## Why I Built This
+
+I built VoluMetric to scratch my own itch. As someone who trains seriously, I wanted to track **weekly training volume per muscle group** — sets done vs. a target — so I could spot under- or over-trained areas at a glance. After trying every popular fitness app on the Play Store, I couldn't find one that made this simple. Most apps focus on logging individual workouts or 1-rep maxes, not on weekly volume balance across muscle groups. So I built the app I actually wanted to use.
+
 ## Screenshots
 
 <p align="center">
-  <img src="app/src/main/res/drawable/Volumetricscreenshots/HomeScreen.png" width="280" alt="Home Screen"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="app/src/main/res/drawable/Volumetricscreenshots/WorkoutLogScreen.png" width="280" alt="Workout Log Screen"/>
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/HomeScreen.png" width="260" alt="Home Screen"/>
+  &nbsp;&nbsp;
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/WorkoutLogScreen.png" width="260" alt="Workout Log Screen"/>
+  &nbsp;&nbsp;
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/HistoryScreen.png" width="260" alt="History Screen"/>
 </p>
 
 ## Features
 
-- **Home Dashboard** — View weekly training stats at a glance with per-muscle-group progress cards
-- **Workout Logging** — Log sets by selecting a target muscle group, entering the exercise name, and recording total sets
-- **Weekly Volume Tracking** — Automatically aggregates sets per muscle group on a week-by-week basis
-- **Animated Bottom Navigation** — Smooth animated nav bar with ball trajectory and indent animations
+- **Home Dashboard** — Weekly goal card with sets completed and average training intensity, plus a per-muscle-group progress grid
+- **Workout Logging** — Pick a muscle group, name the exercise, log total sets — saved instantly to the local database
+- **Workout History** — Filter all past workouts by All / This Week / Last Week, grouped under TODAY / YESTERDAY / dated headers, with at-a-glance stats (total workouts, this week's count, most-trained muscle)
+- **Weekly Volume Tracking** — Sets are automatically aggregated per muscle group on a rolling weekly basis
+- **Reactive UI** — Stat cards, lists, and progress bars update instantly via Kotlin Flows whenever a workout is logged
 
 ## Tech Stack
 
@@ -34,14 +41,15 @@ A modern Android workout tracker built with Jetpack Compose that helps you log e
 com.example.volumetric
 ├── data/
 │   ├── database/         # Room database, DAO, entities
-│   └── di/               # Hilt modules 
+│   ├── mappers/          # Entity ↔ domain model mappers
+│   └── di/               # Hilt modules
 ├── domain/
-│   ├── models/           # Domain models (Muscle)
+│   ├── models/           # Domain models (Muscle, WorkoutDetail, HistoryFilter, DateBucket)
 │   └── viewmodel/        # ViewModels (LogWorkout, MuscleStats)
 ├── presentation/
-│   ├── composables/      # Reusable UI components
+│   ├── composables/      # Reusable UI components per screen
 │   ├── navigation/       # Bottom navigation setup
-│   └── screens/          # App screens
+│   └── screens/          # Home, Workout, History
 └── ui/theme/             # Colors, typography, theme
 ```
 
