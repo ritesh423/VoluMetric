@@ -2,24 +2,36 @@ package com.example.volumetric.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Brutalist palette — cream paper, black ink, flat poster blocks.
+val PaperBg          = Color(0xFFFFF8E7)
+val PaperWhite       = Color(0xFFFFFFFF)
+val InkBlack         = Color(0xFF1B1B1B)
+val BrutalistOrange  = Color(0xFFFF5C00)
+val BrutalistBlue    = Color(0xFF2E5BFF)
+val BrutalistYellow  = Color(0xFFFFD93D)
+val BrutalistPink    = Color(0xFFFF6FB5)
+val MuteGrey         = Color(0xFF6B6B6B)
+val FaintGrey        = Color(0xFFE5E0D6)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-
-val White = Color(0xF8FFFFFF)
-val Whiteless = Color(0xDFFDF9F9)
-val BackgroundDark   = Color(0xFF0D0B1E)
-val SurfaceDark      = Color(0xFF161430)
-val SurfaceCard      = Color(0xFF1C1A35)
-val AccentBlue       = Color(0xFF5B8DEF)
-val AccentPurple     = Color(0xFFA855F7)
-val AccentBlueLight  = Color(0xFF7AB3FF)
-val TextPrimary      = Color(0xFFFFFFFF)
-val TextSecondary    = Color(0xFFAAAAAA)
-val TextMuted        = Color(0xFF666680)
-val GradientStart    = Color(0xFF5B8DEF)
-val GradientEnd      = Color(0xFF7C3AED)
+// Legacy aliases — kept temporarily so screens not yet restyled (Workout,
+// History) still compile. Removed in the next commit once those screens
+// are ported to the brutalist tokens above.
+val BackgroundDark   = PaperBg
+val SurfaceDark      = PaperWhite
+val SurfaceCard      = PaperWhite
+val AccentBlue       = BrutalistBlue
+val AccentBlueLight  = BrutalistBlue
+val AccentPurple     = BrutalistOrange
+val TextPrimary      = InkBlack
+val TextSecondary    = MuteGrey
+val TextMuted        = MuteGrey
+val White            = PaperWhite
+val Whiteless        = PaperBg
+val GradientStart    = BrutalistBlue
+val GradientEnd      = BrutalistOrange
+val Purple80         = BrutalistOrange
+val PurpleGrey80     = MuteGrey
+val Pink80           = BrutalistPink
+val Purple40         = BrutalistOrange
+val PurpleGrey40     = MuteGrey
+val Pink40           = BrutalistPink

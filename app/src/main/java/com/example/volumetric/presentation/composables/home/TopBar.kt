@@ -1,75 +1,77 @@
 package com.example.volumetric.presentation.composables.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.ui.theme.AccentBlue
-import com.example.volumetric.ui.theme.AccentPurple
-import com.example.volumetric.ui.theme.TextPrimary
-import com.example.volumetric.ui.theme.TextSecondary
+import com.example.volumetric.ui.theme.BrutalistYellow
+import com.example.volumetric.ui.theme.InkBlack
+import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistShadow
 
 @Composable
 fun TopBar() {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(AccentBlue, AccentPurple)
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "⚡", fontSize = 16.sp)
-            }
-            Spacer(modifier = Modifier.width(10.dp))
+        Box(
+            modifier = Modifier
+                .rotate(-1.5f)
+                .brutalistShadow(dx = 4.dp, dy = 4.dp)
+                .background(BrutalistYellow)
+                .border(width = 2.dp, color = InkBlack)
+                .padding(horizontal = 12.dp, vertical = 6.dp)
+        ) {
             Text(
-                text = "VoluMetric",
-                color = TextPrimary,
+                text = "VOLUMETRIC",
+                color = InkBlack,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.ExtraBold,
+                letterSpacing = (-0.5).sp
             )
         }
 
-        IconButton(onClick = { }) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .brutalistShadow(dx = 3.dp, dy = 3.dp)
+                .background(PaperWhite)
+                .border(width = 2.dp, color = InkBlack),
+            contentAlignment = Alignment.Center
+        ) {
             Icon(
                 imageVector = Icons.Default.Tune,
                 contentDescription = "Filter",
-                tint = TextSecondary,
-                modifier = Modifier.size(22.dp)
+                tint = InkBlack,
+                modifier = Modifier.size(20.dp)
             )
         }
     }
 }
 
-@Preview()
+@Preview
 @Composable
-fun PreviewTopBar(){
+fun PreviewTopBar() {
     TopBar()
 }

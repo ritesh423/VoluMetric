@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.example.volumetric.presentation.navigation.BottomNavigation
+import com.example.volumetric.ui.theme.VoluMetricTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +19,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            BottomNavigation()
+            VoluMetricTheme {
+                BottomNavigation()
+            }
         }
     }
 }

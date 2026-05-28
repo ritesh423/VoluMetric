@@ -1,6 +1,7 @@
 package com.example.volumetric.presentation.composables.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,24 +10,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.ui.theme.AccentBlue
-import com.example.volumetric.ui.theme.AccentPurple
-import com.example.volumetric.ui.theme.SurfaceCard
-import com.example.volumetric.ui.theme.TextSecondary
+import androidx.compose.ui.zIndex
+import com.example.volumetric.ui.theme.BrutalistOrange
+import com.example.volumetric.ui.theme.BrutalistYellow
+import com.example.volumetric.ui.theme.InkBlack
+import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistShadow
 import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.Locale
@@ -39,14 +38,18 @@ fun WeeklyGoalCard(
     weekNumber: Int = currentWeekNumber(),
     onLogWorkoutClick: () -> Unit = {}
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(22.dp),
-        elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = SurfaceCard)
-    ) {
+    val progress = if (setsTarget == 0) 0f
+                   else (setsCompleted.toFloat() / setsTarget).coerceIn(0f, 1f)
+    val onTrack = progress >= 0.6f
+
+    Box(modifier = Modifier.fillMaxWidth()) {
         Box(
-            modifier = Modifier.padding(18.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .brutalistShadow(dx = 6.dp, dy = 6.dp)
+                .background(BrutalistOrange)
+                .border(width = 3.dp, color = InkBlack)
+                .padding(18.dp)
         ) {
             Column {
                 Row(
@@ -54,94 +57,137 @@ fun WeeklyGoalCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "🏆", fontSize = 16.sp)
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = "Weekly Goal",
-                            color = TextSecondary,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            letterSpacing = 1.sp
-                        )
-                    }
-
+                    Text(
+                        text = "WEEKLY GOAL",
+                        color = InkBlack,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        letterSpacing = 2.sp
+                    )
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(Color.White.copy(alpha = 0.06f))
-                            .padding(horizontal = 10.dp, vertical = 4.dp)
+                            .background(InkBlack)
+                            .padding(horizontal = 8.dp, vertical = 3.dp)
                     ) {
                         Text(
-                            text = "WEEK $weekNumber",
-                            color = TextSecondary,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(14.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = "SETS COMPLETED",
-                            color = TextSecondary,
-                            fontSize = 11.sp,
-                            letterSpacing = 1.sp
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "$setsCompleted/$setsTarget",
-                            color = AccentPurple,
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = "AVG INTENSITY",
-                            color = TextSecondary,
-                            fontSize = 11.sp,
-                            letterSpacing = 1.sp
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "$avgIntensity%",
-                            color = AccentBlue,
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
+                            text = "WK $weekNumber",
+                            color = BrutalistYellow,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            letterSpacing = 1.5.sp
                         )
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    StatBlock(
+                        value = "$setsCompleted",
+                        denom = "/ $setsTarget",
+                        label = "SETS"
+                    )
+                    StatBlock(
+                        value = "$avgIntensity",
+                        denom = "%",
+                        label = "INTENSITY"
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(14.dp)
+                        .border(width = 2.dp, color = InkBlack)
+                        .background(PaperWhite)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(progress)
+                            .height(14.dp)
+                            .background(InkBlack)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 StartWorkoutButton(
                     buttonText = "LOG WORKOUT",
-                    onClick = onLogWorkoutClick,
-                    useGradient = true
+                    onClick = onLogWorkoutClick
+                )
+            }
+        }
+
+        if (onTrack) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = (-10).dp, end = (-6).dp)
+                    .zIndex(1f)
+                    .rotate(6f)
+                    .brutalistShadow(dx = 3.dp, dy = 3.dp)
+                    .background(BrutalistYellow)
+                    .border(width = 2.dp, color = InkBlack)
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+            ) {
+                Text(
+                    text = "★ ON TRACK",
+                    color = InkBlack,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    letterSpacing = 1.5.sp
                 )
             }
         }
     }
 }
 
-private fun currentWeekNumber(): Int {
-    return try {
-        LocalDate.now().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())
-    } catch (e: Exception) {
-        0
+@Composable
+private fun StatBlock(value: String, denom: String, label: String) {
+    Column {
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(
+                text = value,
+                color = InkBlack,
+                fontSize = 48.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.ExtraBold,
+                letterSpacing = (-2).sp,
+                lineHeight = 48.sp
+            )
+            Text(
+                text = denom,
+                color = InkBlack,
+                fontSize = 18.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 4.dp, start = 2.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(
+            text = label,
+            color = InkBlack,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.ExtraBold,
+            letterSpacing = 1.5.sp
+        )
     }
+}
+
+private fun currentWeekNumber(): Int = try {
+    LocalDate.now().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())
+} catch (e: Exception) {
+    0
 }
 
 @Preview
 @Composable
 fun PreviewWeeklyGoal() {
-    WeeklyGoalCard(setsCompleted = 63, setsTarget = 112, avgIntensity = 56)
+    WeeklyGoalCard(setsCompleted = 68, setsTarget = 100, avgIntensity = 72)
 }

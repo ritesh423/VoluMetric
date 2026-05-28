@@ -25,7 +25,7 @@ import com.example.volumetric.presentation.composables.home.GreetingSection
 import com.example.volumetric.presentation.composables.home.MuscleGroupCard
 import com.example.volumetric.presentation.composables.home.TopBar
 import com.example.volumetric.presentation.composables.home.WeeklyGoalCard
-import com.example.volumetric.ui.theme.BackgroundDark
+import com.example.volumetric.ui.theme.PaperBg
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -42,7 +42,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackgroundDark)
+            .background(PaperBg)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

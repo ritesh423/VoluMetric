@@ -374,8 +374,7 @@ fun WorkoutScreen(viewModel: LogWorkoutViewModel = hiltViewModel()) {
                     StartWorkoutButton(
                         buttonText = "Save Workout",
                         onClick = { viewModel.logWorkoutToDB() },
-                        icon = Icons.Default.CheckCircle,
-                        useGradient = true
+                        icon = Icons.Default.CheckCircle
                     )
                 }
             }
