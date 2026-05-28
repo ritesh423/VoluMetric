@@ -25,6 +25,7 @@ import com.example.volumetric.ui.theme.BrutalistBlue
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.MuteGrey
 import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistEntry
 import com.example.volumetric.ui.theme.brutalistShadow
 import java.time.LocalDate
 import java.time.format.TextStyle as JavaTextStyle
@@ -42,6 +43,7 @@ fun GreetingSection(userName: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .brutalistEntry(delayMillis = 60)
             .padding(top = 14.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

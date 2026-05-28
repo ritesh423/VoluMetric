@@ -28,6 +28,7 @@ import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.MuteGrey
 import com.example.volumetric.ui.theme.PaperBg
 import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistEntry
 import com.example.volumetric.ui.theme.brutalistShadow
 
 @Composable
@@ -39,6 +40,7 @@ fun MuscleGroupCard(muscle: Muscle) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .brutalistEntry(delayMillis = 180, fromRotation = -2f)
             .brutalistShadow(dx = 4.dp, dy = 4.dp)
             .background(PaperWhite)
             .border(width = 2.dp, color = InkBlack)

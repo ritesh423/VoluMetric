@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.volumetric.ui.theme.BrutalistYellow
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistEntry
 import com.example.volumetric.ui.theme.brutalistShadow
 
 @Composable
@@ -31,6 +32,7 @@ fun TopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .brutalistEntry()
             .padding(top = 6.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

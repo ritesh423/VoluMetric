@@ -2,6 +2,7 @@ package com.example.volumetric.presentation.composables.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +36,7 @@ import com.example.volumetric.ui.theme.BrutalistYellow
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.PaperWhite
 import com.example.volumetric.ui.theme.brutalistShadow
+import com.example.volumetric.ui.theme.pressScale
 
 @Composable
 fun StartWorkoutButton(
@@ -43,11 +46,14 @@ fun StartWorkoutButton(
     backgroundColor: Color = BrutalistBlue,
     contentColor: Color = PaperWhite
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     Button(
         onClick = onClick,
+        interactionSource = interactionSource,
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
+            .pressScale(interactionSource, pressedScale = 0.97f)
             .brutalistShadow(dx = 5.dp, dy = 5.dp)
             .border(width = 2.5.dp, color = InkBlack),
         shape = RectangleShape,

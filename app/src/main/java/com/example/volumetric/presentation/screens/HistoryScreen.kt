@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,9 +26,10 @@ import com.example.volumetric.presentation.composables.history.GroupedWorkoutLis
 import com.example.volumetric.presentation.composables.history.HistoryFilterPill
 import com.example.volumetric.presentation.composables.history.HistoryTopBar
 import com.example.volumetric.presentation.composables.history.StatCardRow
-import com.example.volumetric.ui.theme.AccentPurple
-import com.example.volumetric.ui.theme.BackgroundDark
-import com.example.volumetric.ui.theme.TextSecondary
+import com.example.volumetric.ui.theme.BrutalistBlue
+import com.example.volumetric.ui.theme.InkBlack
+import com.example.volumetric.ui.theme.MuteGrey
+import com.example.volumetric.ui.theme.PaperBg
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -46,13 +48,15 @@ fun HistoryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackgroundDark)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .background(PaperBg)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        HistoryTopBar(
-            onBackClick = {},
-            onFilterClick = {}
+        HistoryTopBar(totalCount = totalWorkouts)
+
+        HistoryFilterPill(
+            selected = selectedFilter,
+            onSelected = viewModel::onFilterSelected
         )
 
         StatCardRow(
@@ -61,48 +65,44 @@ fun HistoryScreen(
             mostTrainedMuscle = mostTrainedMuscle
         )
 
-        HistoryFilterPill(
-            selected = selectedFilter,
-            onSelected = viewModel::onFilterSelected
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             when {
                 isLoading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = AccentPurple)
+                        CircularProgressIndicator(color = BrutalistBlue)
                     }
                 }
-                groupedWorkouts.isEmpty() -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = "No workouts to show",
-                                fontSize = 16.sp,
-                                color = TextSecondary
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "Try a different filter or log your first workout.",
-                                fontSize = 12.sp,
-                                color = TextSecondary
-                            )
-                        }
-                    }
-                }
-                else -> {
-                    GroupedWorkoutList(grouped = groupedWorkouts)
-                }
+                groupedWorkouts.isEmpty() -> EmptyState()
+                else -> GroupedWorkoutList(grouped = groupedWorkouts)
             }
+        }
+    }
+}
+
+@Composable
+private fun EmptyState() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "NO WORKOUTS YET",
+                color = InkBlack,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.ExtraBold,
+                letterSpacing = 1.6.sp
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = "Log your first workout or try a different filter.",
+                color = MuteGrey,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

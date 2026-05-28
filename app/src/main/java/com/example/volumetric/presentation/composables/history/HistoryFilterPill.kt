@@ -1,14 +1,14 @@
 package com.example.volumetric.presentation.composables.history
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,17 +17,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.volumetric.domain.models.HistoryFilter
-import com.example.volumetric.ui.theme.AccentPurple
-import com.example.volumetric.ui.theme.BackgroundDark
-import com.example.volumetric.ui.theme.SurfaceCard
-import com.example.volumetric.ui.theme.TextPrimary
-import com.example.volumetric.ui.theme.TextSecondary
+import com.example.volumetric.ui.theme.BrutalistBlue
+import com.example.volumetric.ui.theme.InkBlack
+import com.example.volumetric.ui.theme.PaperBg
+import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistEntry
+import com.example.volumetric.ui.theme.brutalistShadow
+import com.example.volumetric.ui.theme.pressScale
 
 @Composable
 fun HistoryFilterPill(
@@ -37,14 +39,14 @@ fun HistoryFilterPill(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(50))
-            .background(SurfaceCard)
-            .padding(4.dp)
+            .brutalistEntry(delayMillis = 80, fromRotation = -1f)
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         HistoryFilter.values().forEach { option ->
-            FilterSegment(
-                option = option,
+            FilterChip(
+                label = option.label,
                 isSelected = option == selected,
                 onClick = { onSelected(option) }
             )
@@ -53,25 +55,35 @@ fun HistoryFilterPill(
 }
 
 @Composable
-private fun RowScope.FilterSegment(
-    option: HistoryFilter,
+private fun FilterChip(
+    label: String,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val bg: Color = if (isSelected) BrutalistBlue else PaperWhite
+    val fg: Color = if (isSelected) PaperWhite else InkBlack
+
     Box(
         modifier = Modifier
-            .weight(1f)
-            .clip(RoundedCornerShape(50))
-            .background(if (isSelected) AccentPurple else androidx.compose.ui.graphics.Color.Transparent)
-            .clickable(onClick = onClick)
-            .padding(PaddingValues(vertical = 10.dp)),
+            .pressScale(interactionSource)
+            .brutalistShadow(dx = 2.5.dp, dy = 2.5.dp)
+            .background(bg)
+            .border(width = 2.dp, color = InkBlack)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick
+            )
+            .padding(PaddingValues(horizontal = 12.dp, vertical = 8.dp)),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = option.label,
-            color = if (isSelected) TextPrimary else TextSecondary,
-            fontSize = 13.sp,
-            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium
+            text = label.uppercase(),
+            color = fg,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.ExtraBold,
+            letterSpacing = 1.2.sp
         )
     }
 }
@@ -82,7 +94,7 @@ fun PreviewHistoryFilterPill() {
     var selected by remember { mutableStateOf(HistoryFilter.ALL) }
     Box(
         modifier = Modifier
-            .background(BackgroundDark)
+            .background(PaperBg)
             .padding(16.dp)
     ) {
         HistoryFilterPill(

@@ -25,6 +25,7 @@ import com.example.volumetric.ui.theme.BrutalistOrange
 import com.example.volumetric.ui.theme.BrutalistYellow
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.PaperWhite
+import com.example.volumetric.ui.theme.brutalistEntry
 import com.example.volumetric.ui.theme.brutalistShadow
 import java.time.LocalDate
 import java.time.temporal.WeekFields
@@ -42,7 +43,10 @@ fun WeeklyGoalCard(
                    else (setsCompleted.toFloat() / setsTarget).coerceIn(0f, 1f)
     val onTrack = progress >= 0.6f
 
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .brutalistEntry(delayMillis = 120)
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
