@@ -10,6 +10,16 @@ The whole UI is built in a **brutalist / Y2K poster** style — cream paper back
 
 It scratches the same itch as any other tracker — **weekly volume per muscle group, sets done vs. target** — but it doesn't feel like another templated dashboard.
 
+## Screenshots
+
+<p align="center">
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/HomeScreen.png" width="260" alt="Home Screen"/>
+  &nbsp;&nbsp;
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/WorkoutLogScreen.png" width="260" alt="Workout Log Screen"/>
+  &nbsp;&nbsp;
+  <img src="app/src/main/res/drawable/Volumetricscreenshots/HistoryScreen.png" width="260" alt="History Screen"/>
+</p>
+
 ## Why I built it
 
 As someone who trains seriously, I wanted to track weekly training volume per muscle group — sets done vs. a target — so I could spot under- or over-trained areas at a glance. Most popular fitness apps focus on logging individual workouts or 1-rep maxes, not on weekly volume balance. So I built the app I actually wanted to use, and styled it the way I actually wanted to look at.
