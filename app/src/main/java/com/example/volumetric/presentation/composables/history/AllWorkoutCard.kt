@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.domain.models.WorkoutDetail
+import com.example.volumetric.presentation.model.WorkoutDetail
 import com.example.volumetric.ui.theme.BrutalistYellow
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.MuteGrey

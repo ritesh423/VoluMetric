@@ -1,7 +1,5 @@
-package com.example.volumetric.domain.models
+package com.example.volumetric.presentation.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -12,16 +10,20 @@ sealed class DateBucket(val label: String) {
     object Today : DateBucket("TODAY")
     object Yesterday : DateBucket("YESTERDAY")
     data class Earlier(val date: LocalDate) : DateBucket(
-        date.format(DateTimeFormatter.ofPattern("EEE, dd MMM", Locale.getDefault())).uppercase()
+        date.format(
+            DateTimeFormatter.ofPattern("EEE, dd MMM", Locale.getDefault())
+        ).uppercase()
     )
 
     companion object {
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun fromEpochMillis(millis: Long): DateBucket {
+        fun fromEpochMillis(
+            millis: Long,
+            today: LocalDate,
+            zoneId: ZoneId
+        ): DateBucket {
             val date = Instant.ofEpochMilli(millis)
-                .atZone(ZoneId.systemDefault())
+                .atZone(zoneId)
                 .toLocalDate()
-            val today = LocalDate.now()
             return when (date) {
                 today -> Today
                 today.minusDays(1) -> Yesterday

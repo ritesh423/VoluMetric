@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.volumetric.data.WorkoutDetailEntity
-import com.example.volumetric.data.mappers.toWorkoutDetail
-import com.example.volumetric.domain.models.DateBucket
+import com.example.volumetric.presentation.mapper.toWorkoutDetail
+import com.example.volumetric.presentation.model.DateBucket
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.PaperBg
 

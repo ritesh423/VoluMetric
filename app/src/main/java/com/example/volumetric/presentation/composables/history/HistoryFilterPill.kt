@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.domain.models.HistoryFilter
+import com.example.volumetric.presentation.model.HistoryFilter
 import com.example.volumetric.ui.theme.BrutalistBlue
 import com.example.volumetric.ui.theme.InkBlack
 import com.example.volumetric.ui.theme.PaperBg

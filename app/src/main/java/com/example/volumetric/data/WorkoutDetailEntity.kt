@@ -10,7 +10,5 @@ data class WorkoutDetailEntity(
     val muscleGroup: String,
     val exerciseName: String,
     val totalSets: Int,
-    val createdAt: Long = System.currentTimeMillis(),
-    val weekOfYear: Int? = null,
-    val year: Int? = null
+    val createdAt: Long
 )

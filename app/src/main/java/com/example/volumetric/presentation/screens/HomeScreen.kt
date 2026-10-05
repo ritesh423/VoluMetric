@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.volumetric.data.mappers.toMuscle
-import com.example.volumetric.domain.viewmodel.MuscleStatsViewModel
+import com.example.volumetric.presentation.mapper.toMuscle
+import com.example.volumetric.presentation.viewmodel.MuscleStatsViewModel
 import com.example.volumetric.presentation.composables.home.GreetingSection
 import com.example.volumetric.presentation.composables.home.MuscleGroupCard
 import com.example.volumetric.presentation.composables.home.TopBar

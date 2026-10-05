@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.volumetric.domain.models.Muscle
+import com.example.volumetric.presentation.model.Muscle
 import com.example.volumetric.ui.theme.BrutalistBlue
 import com.example.volumetric.ui.theme.BrutalistOrange
 import com.example.volumetric.ui.theme.BrutalistPink

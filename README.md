@@ -54,21 +54,32 @@ Every card in the app is just `brutalistShadow + background + border` plus one o
 | State | ViewModel + Kotlin StateFlow |
 | Architecture | MVVM |
 
+The app uses a simple MVVM dependency flow:
+
+```text
+Compose screens -> presentation ViewModels -> WorkoutRepository -> Room DAO
+```
+
+Room stores the workout's `createdAt` timestamp as the source of truth. The Home and History
+screens calculate the same Monday-to-Monday time ranges from an injected `Clock` and `ZoneId`
+instead of storing derived week numbers or years.
+
 ## Project Structure
 
 ```
 com.example.volumetric
 ├── data/
-│   ├── (database/)       # Room database, DAO, entities
-│   └── mappers/          # Entity ↔ domain model mappers
-├── domain/
-│   ├── models/           # Muscle, WorkoutDetail, HistoryFilter, DateBucket
-│   ├── repository/       # WorkoutRepository
-│   └── viewmodel/        # LogWorkout, MuscleStats
+│   ├── repository/       # Data boundary used by ViewModels
+│   ├── time/             # Consistent timestamp-based week ranges
+│   └── (database files)  # Room database, DAO, entities
 ├── presentation/
 │   ├── composables/      # Reusable UI components per screen (home/, workout/, history/)
+│   ├── mapper/           # Room results -> UI models
+│   ├── model/            # Screen models and filters
 │   ├── navigation/       # Bottom navigation
-│   └── screens/          # HomeScreen, WorkoutScreen, HistoryScreen
+│   ├── screens/          # HomeScreen, WorkoutScreen, HistoryScreen
+│   └── viewmodel/        # LogWorkoutViewModel, MuscleStatsViewModel
+├── di/                   # Room and time dependency providers
 └── ui/theme/             # Brutalist color, type, theme, modifiers
 ```
 

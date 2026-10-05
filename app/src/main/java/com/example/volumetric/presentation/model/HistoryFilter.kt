@@ -1,4 +1,4 @@
-package com.example.volumetric.domain.models
+package com.example.volumetric.presentation.model
 
 enum class HistoryFilter(val label: String) {
     ALL("All"),

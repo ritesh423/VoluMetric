@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.volumetric.domain.viewmodel.MuscleStatsViewModel
+import com.example.volumetric.presentation.viewmodel.MuscleStatsViewModel
 import com.example.volumetric.presentation.composables.history.GroupedWorkoutList
 import com.example.volumetric.presentation.composables.history.HistoryFilterPill
 import com.example.volumetric.presentation.composables.history.HistoryTopBar
@@ -65,7 +66,11 @@ fun HistoryScreen(
             mostTrainedMuscle = mostTrainedMuscle
         )
 
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
             when {
                 isLoading -> {
                     Box(
@@ -76,7 +81,10 @@ fun HistoryScreen(
                     }
                 }
                 groupedWorkouts.isEmpty() -> EmptyState()
-                else -> GroupedWorkoutList(grouped = groupedWorkouts)
+                else -> GroupedWorkoutList(
+                    grouped = groupedWorkouts,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }
